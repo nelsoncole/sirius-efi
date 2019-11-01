@@ -1,0 +1,281 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+idt                 0x800             dscptor.o
+gdt                 0x800             dscptor.o
+gdtr                0x10              dscptor.o
+CPUID_REQUEST       0x4               main.o
+idtr                0x10              dscptor.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000000400000                __image_base__ = 0x400000
+                0x0000000000000000                __dll__ = 0x0
+                0x0000000000400000                ___ImageBase = 0x400000
+                0x0000000000001000                __section_alignment__ = 0x1000
+                0x0000000000000200                __file_alignment__ = 0x200
+                0x0000000000000004                __major_os_version__ = 0x4
+                0x0000000000000000                __minor_os_version__ = 0x0
+                0x0000000000000001                __major_image_version__ = 0x1
+                0x0000000000000000                __minor_image_version__ = 0x0
+                0x0000000000000004                __major_subsystem_version__ = 0x4
+                0x0000000000000000                __minor_subsystem_version__ = 0x0
+                0x0000000000000003                __subsystem__ = 0x3
+                0x0000000000200000                __size_of_stack_reserve__ = 0x200000
+                0x0000000000001000                __size_of_stack_commit__ = 0x1000
+                0x0000000000100000                __size_of_heap_reserve__ = 0x100000
+                0x0000000000001000                __size_of_heap_commit__ = 0x1000
+                0x0000000000000000                __loader_flags__ = 0x0
+                0x0000000000000000                __dll_characteristics__ = 0x0
+
+.text           0x0000000000101000     0x3000
+                0x0000000000101000                code = .
+ *(.text)
+ .text          0x0000000000101000       0x42 setup.obj
+                0x0000000000101000                start
+                0x000000000010100c                gdt_flush
+                0x0000000000101034                idt_flush
+ *fill*         0x0000000000101042        0xe 
+ .text          0x0000000000101050      0x140 vector.obj
+                0x000000000010107c                isr00
+                0x0000000000101082                isr01
+                0x0000000000101088                isr02
+                0x000000000010108e                isr03
+                0x0000000000101094                isr04
+                0x000000000010109a                isr05
+                0x00000000001010a0                isr06
+                0x00000000001010a6                isr07
+                0x00000000001010ac                isr08
+                0x00000000001010b0                isr09
+                0x00000000001010b6                isr10
+                0x00000000001010ba                isr11
+                0x00000000001010be                isr12
+                0x00000000001010c2                isr13
+                0x00000000001010c6                isr14
+                0x00000000001010ca                isr15
+                0x00000000001010d0                isr16
+                0x00000000001010d9                isr17
+                0x00000000001010e0                isr18
+                0x00000000001010e9                isr19
+                0x00000000001010f2                isr20
+                0x00000000001010fb                isr21
+                0x0000000000101104                isr22
+                0x000000000010110d                isr23
+                0x0000000000101116                isr24
+                0x000000000010111f                isr25
+                0x0000000000101128                isr26
+                0x0000000000101131                isr27
+                0x000000000010113a                isr28
+                0x0000000000101143                isr29
+                0x000000000010114c                isr30
+                0x0000000000101155                isr31
+                0x000000000010118a                lvt0
+ .text          0x0000000000101190       0xe8 main.o
+                0x0000000000101190                GraphicInitialize
+                0x00000000001011e7                _main
+ .text          0x0000000000101278       0x5c os.o
+                0x0000000000101278                wait_ns
+                0x000000000010129d                getmsr
+                0x00000000001012b9                setmsr
+                0x00000000001012cd                cli
+                0x00000000001012cf                sti
+ .text          0x00000000001012d4        0x0 data.o
+ .text          0x00000000001012d4      0x6d8 dscptor.o
+                0x0000000000101548                gdt_install
+                0x00000000001018bd                idt_install
+                0x000000000010190d                trap
+                0x000000000010195b                interrupter
+ .text          0x00000000001019ac      0x5a0 exceptions.o
+                0x00000000001019ac                fault_exception
+                0x0000000000101a1e                exceptions_install
+ .text          0x0000000000101f4c      0x130 string.o
+                0x0000000000101f4c                strlen
+                0x0000000000101f79                copymem
+                0x0000000000101fee                setmem
+                0x000000000010202f                strcpy
+ .text          0x000000000010207c       0x28 memory.o
+                0x000000000010207c                Malloc
+                0x00000000001020a1                Free
+ .text          0x00000000001020a4     0x13a4 gui.o
+                0x00000000001020a4                PutPixel
+                0x00000000001020cd                PutPixelBuff
+                0x0000000000102104                RefreshRate
+                0x000000000010214e                LineDrawHorizontal
+                0x00000000001021a0                LineDrawVertical
+                0x00000000001021f2                DrawRect
+                0x00000000001022ce                DrawArea
+                0x0000000000102335                DrawChar
+                0x000000000010242b                DrawCharTransparent
+                0x00000000001024e7                InitializeBoxDraw
+                0x000000000010254b                UpdateBoxDraw
+                0x00000000001025ec                BoxDraw
+                0x0000000000102746                CreateWindow
+                0x00000000001029af                CreateObject
+                0x0000000000102c1b                UpdateWindow
+                0x0000000000102e01                UpdateObject
+                0x000000000010312a                Send
+                0x000000000010327e                Receive
+                0x00000000001032be                GwSetFocus
+                0x00000000001032cd                ObjectSetFocus
+                0x00000000001032dc                CreateBox
+                0x00000000001033a8                outputstring
+ .text          0x0000000000103448        0x0 font12x16.o
+ .text          0x0000000000103448      0x480 console.o
+                0x0000000000103448                ClearScreen
+                0x000000000010344e                SetAttribute
+                0x0000000000103454                EnableCursor
+                0x0000000000103467                SetCursorPosition
+                0x00000000001035e8                print
+ .text          0x00000000001038c8      0x108 cpuid.o
+                0x00000000001038c8                cpuid_vendor
+                0x000000000010390d                cpuid_processor_brand
+ .text          0x00000000001039d0      0x174 apic.o
+                0x00000000001039f7                enableapic
+                0x0000000000103a37                apic_eoi_register
+                0x0000000000103a48                apic_initialize
+                0x0000000000103af9                apic_initial_count_timer
+                0x0000000000103b0c                apic_timer
+ .text          0x0000000000103b44       0x84 lvt.o
+                0x0000000000103b44                lvt_function
+                0x0000000000103b90                lvt_install
+ .text          0x0000000000103bc8      0x27c paging.o
+                0x0000000000103bc8                load_page_diretory
+                0x0000000000103be2                page_enable
+                0x0000000000103bee                __native_flush_tlb_single
+                0x0000000000103c08                flush_tlb
+                0x0000000000103c29                page_install
+                0x0000000000104000                . = ALIGN (0x1000)
+ *fill*         0x0000000000103e44      0x1bc 
+
+.data           0x0000000000104000     0x3000
+                0x0000000000104000                data = .
+ *(.data)
+ .data          0x0000000000104000       0x34 setup.obj
+ .data          0x0000000000104034        0x0 main.o
+ .data          0x0000000000104034        0x0 os.o
+ .data          0x0000000000104034        0x0 data.o
+ .data          0x0000000000104034        0x0 dscptor.o
+ *fill*         0x0000000000104034        0xc 
+ .data          0x0000000000104040       0x80 exceptions.o
+                0x0000000000104040                exception_mensagem
+ .data          0x00000000001040c0        0x0 string.o
+ .data          0x00000000001040c0        0x4 memory.o
+                0x00000000001040c0                zBUF
+ *fill*         0x00000000001040c4       0x3c 
+ .data          0x0000000000104100       0x40 gui.o
+                0x0000000000104100                ColorTable
+ .data          0x0000000000104140     0x1000 font12x16.o
+                0x0000000000104140                font12x16
+ .data          0x0000000000105140        0x0 console.o
+ .data          0x0000000000105140        0x0 cpuid.o
+ .data          0x0000000000105140        0x4 apic.o
+                0x0000000000105140                lapicbase
+ .data          0x0000000000105144        0x0 lvt.o
+ .data          0x0000000000105144        0x8 paging.o
+                0x0000000000105144                kernel_page_directory
+                0x0000000000105148                kernel_page_table
+ *(COMMON)
+ COMMON         0x000000000010514c        0x4 main.o
+                0x000000000010514c                CPUID_REQUEST
+ *fill*         0x0000000000105150       0x30 
+ COMMON         0x0000000000105180     0x1020 dscptor.o
+                0x0000000000105180                idt
+                0x0000000000105980                gdt
+                0x0000000000106180                gdtr
+                0x0000000000106190                idtr
+                0x0000000000107000                . = ALIGN (0x1000)
+ *fill*         0x00000000001061a0      0xe60 
+
+.drectve        0x0000000000107000      0x1e8
+ .drectve       0x0000000000107000       0x20 main.o
+ .drectve       0x0000000000107020       0x20 os.o
+ .drectve       0x0000000000107040       0x20 data.o
+ .drectve       0x0000000000107060       0x48 dscptor.o
+ .drectve       0x00000000001070a8       0x20 exceptions.o
+ .drectve       0x00000000001070c8       0x20 string.o
+ .drectve       0x00000000001070e8       0x20 memory.o
+ .drectve       0x0000000000107108       0x20 gui.o
+ .drectve       0x0000000000107128       0x20 font12x16.o
+ .drectve       0x0000000000107148       0x20 console.o
+ .drectve       0x0000000000107168       0x20 cpuid.o
+ .drectve       0x0000000000107188       0x20 apic.o
+ .drectve       0x00000000001071a8       0x20 lvt.o
+ .drectve       0x00000000001071c8       0x20 paging.o
+
+.rodata         0x00000000001071e8      0xe18
+                0x00000000001071e8                rodata = .
+ *(.rdata)
+ .rdata         0x00000000001071e8       0x20 main.o
+ .rdata         0x0000000000107208      0x3c8 exceptions.o
+ .rdata         0x00000000001075d0       0xd8 console.o
+ .rdata         0x00000000001076a8        0x4 apic.o
+ .rdata         0x00000000001076ac       0x14 lvt.o
+ *(.rodata)
+                0x0000000000108000                . = ALIGN (0x1000)
+ *fill*         0x00000000001076c0      0x940 
+
+.rdata          0x0000000000108000      0x150
+ .rdata$zzz     0x0000000000108000       0x18 main.o
+ .rdata$zzz     0x0000000000108018       0x18 os.o
+ .rdata$zzz     0x0000000000108030       0x18 data.o
+ .rdata$zzz     0x0000000000108048       0x18 dscptor.o
+ .rdata$zzz     0x0000000000108060       0x18 exceptions.o
+ .rdata$zzz     0x0000000000108078       0x18 string.o
+ .rdata$zzz     0x0000000000108090       0x18 memory.o
+ .rdata$zzz     0x00000000001080a8       0x18 gui.o
+ .rdata$zzz     0x00000000001080c0       0x18 font12x16.o
+ .rdata$zzz     0x00000000001080d8       0x18 console.o
+ .rdata$zzz     0x00000000001080f0       0x18 cpuid.o
+ .rdata$zzz     0x0000000000108108       0x18 apic.o
+ .rdata$zzz     0x0000000000108120       0x18 lvt.o
+ .rdata$zzz     0x0000000000108138       0x18 paging.o
+
+.bss            0x0000000000108150    0x20eb0
+                0x0000000000108150                bss = .
+ *(.bss)
+ .bss           0x0000000000108150    0x20000 setup.obj
+                0x0000000000128150                stack
+ .bss           0x0000000000128150        0x0 main.o
+ .bss           0x0000000000128150        0x0 os.o
+ .bss           0x0000000000128150        0x0 data.o
+ .bss           0x0000000000128150        0x0 dscptor.o
+ .bss           0x0000000000128150        0x0 exceptions.o
+ .bss           0x0000000000128150        0x0 string.o
+ .bss           0x0000000000128150        0x0 memory.o
+ .bss           0x0000000000128150       0x10 gui.o
+                0x0000000000128150                G
+                0x0000000000128154                GlobalGwFocus
+                0x0000000000128158                GlobalObjectFocus
+                0x000000000012815c                Box
+ .bss           0x0000000000128160        0x0 font12x16.o
+ .bss           0x0000000000128160        0x0 console.o
+ .bss           0x0000000000128160        0x0 cpuid.o
+ .bss           0x0000000000128160        0x0 apic.o
+ .bss           0x0000000000128160        0x0 lvt.o
+ .bss           0x0000000000128160        0x0 paging.o
+                0x0000000000129000                . = ALIGN (0x1000)
+ *fill*         0x0000000000128160      0xea0 
+                0x0000000000129000                _end = .
+LOAD setup.obj
+LOAD vector.obj
+LOAD main.o
+LOAD os.o
+LOAD data.o
+LOAD dscptor.o
+LOAD exceptions.o
+LOAD string.o
+LOAD memory.o
+LOAD gui.o
+LOAD font12x16.o
+LOAD console.o
+LOAD cpuid.o
+LOAD apic.o
+LOAD lvt.o
+LOAD paging.o
+OUTPUT(kernel.bin pe-i386)
