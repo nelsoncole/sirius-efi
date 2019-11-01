@@ -39,8 +39,9 @@ UINTN _main(SYSTEM *System)
 	gdt_install();
 	idt_install();
 	
-	page_install();
-	
+	// Problemas com a paginação
+	// page_install();
+
 	
 	apic_initialize();
 	apic_timer();

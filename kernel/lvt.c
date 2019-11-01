@@ -18,7 +18,6 @@ VOID lvt_function(INTN  n){
 		
 		case 32: // APIC Timer
 			apic_initial_count_timer(12345);
-			print("Default LVT n: %d\n",n);
 		break;
 		default:
 			print("Default LVT n: %d\n",n);

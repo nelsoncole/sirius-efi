@@ -49,6 +49,7 @@ objs/efi_main.o
 
 :Linking, create PE+ subsystem = EFI_APPLICATION
 GCC -m32 -nostdlib -nostdinc -Wl,--subsystem,10 -e _start -o bootia32.efi %MyObjs% -lgcc
+move bootia32.efi ../bin
 
 :removing objects
 rm objs/*.o

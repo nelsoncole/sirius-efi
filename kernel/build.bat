@@ -50,6 +50,7 @@ paging.o
 
 :Linking
 ld -m i386pe -T link.ld -V -o kernel.bin %MyObjs% -Map kernel.map
+move kernel.bin ../bin
 
 
 :remove
